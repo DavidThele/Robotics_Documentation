@@ -83,8 +83,8 @@ export const documentationData = [
 
 # General Structure
 
-## Opmode Layer
-- Execution entry point.
+## Opmode Layer (This is mostly where new code will be written)
+- Execution entry point. Basically the start of the code. Comparable to a main method. 
 - **Teleop**
   - Read driver inputs → send subsystem commands.
   - Loop continuously.
@@ -94,19 +94,21 @@ export const documentationData = [
   - Use subsystems to score/pick/place.
   - Block or continue using the action sequences.
 
-## Subsystem Layer
+## Component Layer (Code will be written here if a new component get's added to the robot)
+- This layer could help an understanding of how to write code for the robot, but deep understanding of it is not strictly neccessary.
 - Hardware modules:
   - Drivetrain
   - Lift
   - Intake
   - Arm
   - Sensors (IMU, cameras, etc.)
-- Each subsystem includes:
+- Each component includes:
   - Hardware initialization
   - Control logic (PID, motion planning, presets)
   - loop() method per cycle
 
-## Math Layer
+## Logic & Math Layer
+- This layer is not neccessary to understand how to write code for the robot, so only pursue it if you are interested in learning more about how these work
 - MotionProfile helpers
 - PID(F) controllers
 - Pose estimation tools
