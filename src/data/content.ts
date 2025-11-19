@@ -47,18 +47,19 @@ const motionProfileDescription = 'A motion profile defines a plan on how to get 
  */
 export const documentationData = [
   {
-    id: 'docs-home',
-    name: 'Documentation Home',
+    id: 'Documentation Overview',
+    name: 'Documentation Overview',
     type: 'file',
     isLanding: true,
-    content: `# Welcome!
+    content: `
+## IMPORTANT: Please read everything on this page before continuing with the documentation as there is neccessary information here.
+# Welcome!
 - Welcome to the documentation! Classes are organized in folders on the left panel, mirroring the codebase.
 - The goal: help you understand the custom classes in the Thacher Robotics codebase so you can write your own robot code.
-- For questions or contributions, contact:
+- For questions, contact:
 - **David Thele** — dthele@thacher.org, 805-317-1896
 - **Mr. Todd Meyer** — tmeyer@thacher.org
- 
-## IMPORTANT: Please read everything on this page before continuing with the documentation as there is neccessary information here.
+- For Contributions, reference the [Github Repo](https://github.com/DavidThele/Robotics_Documentation)
 
 # Need-to-Know Terms
 
@@ -109,7 +110,7 @@ export const documentationData = [
 - MotionProfile helpers
 - PID(F) controllers
 - Pose estimation tools
-- (Used by subsystems; not subsystems themselves)
+- Used by subsystems; not subsystems themselves
 
 # Autonomous Action Framework
 - Autonomous runs a list of actions sequentially.
@@ -117,7 +118,6 @@ export const documentationData = [
 - Sends commands to motors, servos, sensors.
 - Creates a clean autonomous pipeline.
 
-# Runtime Flow
 
     `
   },
@@ -1111,39 +1111,377 @@ export const documentationData = [
 // Homework Data Structure
 export const homeworkData = [
   {
-    id: 'hw-home',
-    name: 'Homework Assignments',
-    type: 'file',
+    id: 'HW Overview',
+    name: 'Homework Overview',
     isLanding: true,
-    content: 'Welcome to the homework assignments section! Here you will find practice assignments to help you learn the codebase. Each assignment includes learning objectives, tasks, hints, and references to related documentation.',
+    content: `
+## IMPORTANT: Please read everything on this page before continuing with the documentation as there is neccessary information here.
+# Welcome!
+- Welcome to the assignment section! These assignments are meant to help you better your understanding of how to code works and offer ways of practicing with the code.
+- Before you get started, I STRONGLY encourage creating a second clone of the [repo](https://github.com/DavidThele/Robotics_Documentation) and calling this one something like "Robotics Practice Clone" if you want to answer some of the questions with the context provided in our codebase, but you can also just write your answers down in a notepad or blank code file if you prefer. 
+  - This second clone prevents your practice code from mixing with your actual code. If you do this, however, it is IMPERATIVE that you do not push your practice code, as this may mess up the code that the robot runs n.
+- If you ever get stuck or need help, feel free to reach out to David Thele (dthele@thacher.org or 805-317-1896) for help. 
+    `
   },
   {
-    id: 'hw-1',
-    name: 'Assignment 1: Data Loading',
+    id: 'Basics of Blocking Actions',
+    name: 'Basics of Blocking Actions',
     type: 'file',
     difficulty: 'Easy',
-    description: 'Learn how to use the DataManager class to load and save data from files. This assignment will help you understand the basics of file I/O operations.',
-    objectives: [
-      'Understand the DataManager API',
-      'Load data from a JSON file',
-      'Save modified data back to a file',
-    ],
-    docReferences: [
+    description: 'This assignment covers the basics of using what blocking actions are, how they work, and how they fit into the overall structure of the code.',
+    objectives: ['Learn what blocking actions are', 'Learn about the methods within a blocking action', 'Learn about related classes that are closely used with blocking actions'],
+    docReferences: ['BlockingAction'],
+    mcq: [
       {
-        title: 'DataManager Documentation',
-        docId: 'data-manager',
+        prompt: 'What is a BlockingAction?',
+        choices: [
+          'A method that runs immediately when you call it', 
+          'A data structure that reacts to a button press on the controller',
+          'An action that stops other actions from running until it completes',
+          'An action that automatically retries a task after it fails'
+        ],
+        correctAnswer: 'An action that stops other actions from running until it completes',
+      },
+      {
+        prompt: 'Which method determines whether a BlockingAction has completed?',
+        choices: [
+          'loop()', 
+          'setAction()',
+          'updateTelemetry()',
+          'isFinished()'
+        ],
+        correctAnswer: 'isFinished()',
+      },
+      {
+        prompt: 'What is a BlockingActionListener used for?',
+        choices: [
+          'To move the robot automatically', 
+          'To receive notifications when a BlockingAction starts or finishes',
+          'To react to a controller button press',
+          'To react to a change in opmode status (i.e. init phase, start phase, stop phase, etc.)'
+        ],
+        correctAnswer: 'To receive notifications when a BlockingAction starts or finishes',
+      },
+      {
+        prompt: 'What is the purpose of a BlockingActionAdapter?',
+        choices: [
+          'To provide default empty implementations of a listener interface', 
+          'To run a sequence of actions faster',
+          'To store a list of blocking actions',
+          'To manage different types of blocking actions and adapt to them based on what they do'
+        ],
+        correctAnswer: 'To provide default empty implementations of a listener interface',
+      },
+    ]
+  },
+  {
+    id: 'Conditional, Temporal, and Path Blocking Actions',
+    name: 'Conditional, Temporal and Path Blocking Actions',
+    type: 'file',
+    difficulty: 'Easy',
+    description: 'This assignment covers the different implementations of blocking actions and what they do. ',
+    objectives: ['Learn about Conditional Blocking Actions', 'Learn about Temporal Blocking Actions', 'Learn about Path Blocking Actions'],
+    docReferences: ['BlockingAction', 'ConditionalBlockingAction', 'TemporalBlockingAction', 'PathBlockingAction'],
+    mcq: [
+      {
+        prompt: 'What is a conditional blocking action?',
+        choices: [
+          'An action that will run until a certain boolean condition is met', 
+          'An action that will run until a certain amount of time has elapsed',
+          'An action that will run until the robot reaches the end of a path',
+          'None of the above'
+        ],
+        correctAnswer: 'An action that will run until a certain boolean condition is met',
+      },
+      {
+        prompt: 'What is a temporal blocking action?',
+        choices: [
+          'An action that will run until a certain boolean condition is met', 
+          'An action that will run until a certain amount of time has elapsed',
+          'An action that will run until the robot reaches the end of a path',
+          'None of the above'
+        ],
+        correctAnswer: 'An action that will run until a certain amount of time has elapsed',
+      },
+      {
+        prompt: 'What is a path blocking action?',
+        choices: [
+          'An action that will run until a certain boolean condition is met', 
+          'An action that will run until a certain amount of time has elapsed',
+          'An action that will run until the robot reaches the end of a path',
+          'None of the above'
+        ],
+        correctAnswer: 'An action that will run until the robot reaches the end of a path',
+      },
+      {
+        prompt: 'Which blocking action will run immediately, allowing the user to specify actions to run without having to wait in a queue.',
+        choices: [
+          'TemporalBlockingAction', 
+          'ConditionalBlockingAction',
+          'PathBlockingAction',
+          'None of the above'
+        ],
+        correctAnswer: 'None of the above',
+      },
+      {
+        prompt: 'Which interface is used in a conditional blocking action to determine when the action should be marked as completion?',
+        choices: [
+          'Runnable', 
+          'BooleanSupplier',
+          'BlockingActionListener',
+          'KeyListener'
+        ],
+        correctAnswer: 'BooleanSupplier',
+      },
+      {
+        prompt: 'Why would a boolean supplier be used instead of just a normal boolean',
+        choices: [
+          'To calculate the boolean value before they are needed so that they do not need to be recalcuated when the action runs, and the values wont change over time', 
+          'To postpone the caluclation of a boolean value so that the boolean state is updated at the time of running the action, and so that the boolean value can change over time',
+          'To force the action to run immediately instead of waiting for other actions ahead of it so that you can force an action ahead of another one in the queue',
+          'To allow access to the boolean from outside the method so that the telemetry can post its value to the phone, and so the boolean value does not change over time'
+        ],
+        correctAnswer: 'To postpone the caluclation of a boolean value so that the boolean state is updated at the time of running the action, and so that the boolean value can change over time',
+      },
+      {
+        prompt: 'Which of the following is a valid constructor for a Temporal Blocking Action',
+        choices: [
+          'TemporalBlockingAction(int millisRequested)', 
+          'TemporalBlockingAction(BooleanSupplier condition)',
+          'TemporalBlockingAction(String name, BooleanSupplier condition)',
+          'TemporalBlockingAction(String name, int millisRequested, Runnable action)'
+        ],
+        correctAnswer: 'TemporalBlockingAction(String name, int millisRequested, Runnable action)',
+      },
+    ]
+  },
+  {
+    id: 'Basic Paths',
+    name: 'Basic Paths',
+    type: 'file',
+    difficulty: 'Easy',
+    description: 'This assignment covers defining paths for the robot to follow.',
+    objectives: ['Learn what a Pathchain is', 'Learn about Bezier lines & curves', 'Learn how to define a path'],
+    docReferences: ['PathBlockingAction', 'Auton'],
+    mcq: [
+      {
+        prompt: 'What class is used to store a series of paths for the robot to follow?',
+        choices: [
+          'PathChain', 
+          'Paths',
+          'ActionSequence',
+          'PathBlockingAction'
+        ],
+        correctAnswer: 'PathChain',
+      },
+      {
+        prompt: 'What method do you need to call in order to create a new path for the robot to follow?',
+        choices: [
+          'robot.pathBuilder()', 
+          'robot.getFollower()',
+          'robot.getPaths()',
+          'robot.createPath(PathChain path)'
+        ],
+        correctAnswer: 'robot.pathBuilder()',
+      },
+      {
+        prompt: 'Lets say you have a PathBuilder object from calling the method above. What method should you call on this object to add a path?',
+        choices: [
+          'builder.addPath(Path path)', 
+          'builder.addPath()',
+          'builder.createPath(Path path)',
+          'builder.move(PathChain path)'
+        ],
+        correctAnswer: 'builder.addPath(Path path)',
+      },
+      {
+        prompt: 'How would you make a line path from point (0,0) to point (10,10)?',
+        choices: [
+          'new BezierLine(new Pose(0,0), new Pose(10,10))', 
+          'new Line(new Pose(0,0), new Pose(10,10))',
+          'new LinePath(new Pose(0,0), new Pose(10,10))',
+          'new Vector(new Pose(0,0), new Pose(10,10)'
+        ],
+        correctAnswer: 'new BezierLine(new Pose(0,0), new Pose(10,10))',
+      },
+      {
+        prompt: 'How would you put this all together to create a path chain within your builder?',
+        choices: [
+          'robot.pathBuilder()\n.addPath(new BezierLine(new Pose(0,0),newPose(10,10)))', 
+          'robot.pathBuilder()\n.addPath(new Pose(0,0),newPose(10,10))',
+          'robot.pathBuilder()\n.addPath(new BezierLine((0,0), (10,10))',
+          'None of the above'
+        ],
+        correctAnswer: 'robot.pathBuilder()\n.addPath(new BezierLine(new Pose(0,0),newPose(10,10)))',
+      },
+      {
+        prompt: 'Once you\'ve defined your path within your builder, what method do you call to turn it into a PathChain that the robot can follow?',
+        choices: [
+          'builder.build()', 
+          'builder.getPath()',
+          'builder.getPathChain()',
+          'builder.getPaths()'
+        ],
+        correctAnswer: 'builder.build()',
       },
     ],
-    tasks: [
-      'Create a new DataManager instance',
-      'Load the provided "students.json" file using loadData()',
-      'Add a new student object to the loaded data',
-      'Save the modified data to "updated_students.json"',
-      'Verify the file was created correctly',
+    codeExercises: [
+      {
+        prompt: 'Create a pathchain object that moves from point (5,5) to point (3,8)',
+        answer: 'PathChain path = robot.pathBuilder()\n.addPath(new BezierLine(new Pose(5,5),newPose(3,8)))\n.build();'
+        
+      }
+    ]
+  },
+  {
+    id: 'Simple Autonomous ActionSequence',
+    name: 'Simple Autonomous ActionSequence',
+    type: 'file',
+    difficulty: 'Medium',
+    description: 'This assignment covers actually writing Action Sequences for the auton period of the match.',
+    objectives: ['Learn how to write an Action Sequence','Learn different types of actions'],
+    docReferences: ['ActionSequence', 'Auton', 'BlockingAction'],
+    mcq: [
+      {
+        prompt: 'What abstract class should you override to write code for the autonomous period of the match',
+        choices: [
+          'SmartOpMode',
+          'Auton',
+          'Teleop',
+          'Robot'
+        ],
+        correctAnswer: 'Auton'
+      },
+      {
+        prompt: 'What field defines the list of things your robot should do durign the autonomous period of the match',
+        choices: [
+          'actionSequence',
+          'blockingActionManager',
+          'robot',
+          'bindings'
+        ],
+        correctAnswer: 'actionSequence'
+      },
+      {
+        prompt: 'Which method should you write to define what you want the robot to do during the autonomous period of the match',
+        choices: [
+          'init()',
+          'start()',
+          'createActionSequence()',
+          'loop()'
+        ],
+        correctAnswer: 'createActionSequence()'
+      },
+
     ],
-    hints: [
-      'Remember to check if the file exists before loading',
-      'The data structure is an array of student objects',
+    codeExercises: [
+      {
+        prompt: 'Write an action sequence that does the following: Move from (0,0) to (10,10). Enable intake. Move to (50,30). Disable intake.',
+        example: dedent`
+          //define shooting path
+          PathChain goToShoot = robot.pathBuilder()
+            .addPath(new BezierLine(new Pose(30,20),new Pose(0,5)))
+            .build();
+
+          //define intaking path
+          PathChain goToIntakeZone = robot.pathBuilder()
+            .addPath(new BezierLine(new Pose(0,5),new Pose(18,4)))
+            .build();
+
+          ActionSequence example = new ActionSequence(robot)
+            .path("Move to Shoot", goToShoot)
+            .add(robot.actions().enableShooter())
+            .path("Move to Intake Zone", goToIntakeZone)
+            .add(robot.actions().disableShooter())
+          .runActions();`,
+        answer: dedent`
+        //first move path defined
+        PathChain moveTo10_10 = robot.pathBuilder()
+          .addPath(new BezierLine(new Pose(0,0),new Pose(10,10)))
+          .build();
+           
+        //second move path defined
+        PathChain moveTo50_30 = robot.pathBuilder()
+          .addPath(new BezierLine(new Pose(10,10),new Pose(50,30)))
+          .build();
+
+          ActionSequence example = new ActionSequence(robot)
+            .path("Move to (10, 10)", moveTo10_10)
+            .add(robot.actions().enableIntake())
+            .path("Move to (50, 30)", moveTo50_30)
+            .add(robot.actions().disableIntake())
+          .runActions();`
+      }
+    ]
+  },
+  {
+    id: 'Blocking Action Creation',
+    name: 'Blocking Action Creation',
+    type: 'file',
+    difficulty: 'Medium',
+    description: 'This assignment covers creating new instances of the different types of blocking actions',
+    objectives: ['Learn how to create a Temporal Blocking Action', 'Learn how to create a Path Blocking Action', 'Learn how to create a Conditional Blocking Action'],
+    docReferences: ['BlockingAction', 'TemporalBlockingAction', 'PathBlockingAction', 'ConditionalBlockingAction'],
+    mcq: [
+      {
+        prompt: 'What is the correct syntax for using a lambda to define a single lineRunnable object',
+        choices: [
+          'Runnable r = () -> System.out.println("running");',
+          'Runnable r = r -> System.out.println("running");',
+          'Runnable r = System.out.println("running") -> ();',
+          'Runnable r = System.out.println("running") -> r;'
+        ],
+        correctAnswer: 'Runnable r = () -> System.out.println("running");'
+      },
+      {
+        prompt: 'What is the correct syntax for using a lambda to define a multi line Runnable object',
+        choices: [
+          'Runnable r = () -> {\nSystem.out.println("line 1");\nSystem.out.println("line 2");\n};',
+          'Runnable r = {} -> (\nSystem.out.println("line 1");\nSystem.out.println("line 2");\n);',
+          'Runnable r = () -> \nSystem.out.println("line 1");\nSystem.out.println("line 2");\n;',
+          'Runnable r = (lines=4) -> {\nSystem.out.println("line 1");\nSystem.out.println("line 2");\n;}'
+        ],
+        correctAnswer: 'Runnable r = () -> {\nSystem.out.println("line 1");\nSystem.out.println("line 2");\n};'
+      },
+      {
+        prompt: 'What is the correct syntax for using a lambda to define a BooleanSupplier object',
+        choices: [
+          'BooleanSupplier supplier = () -> true;',
+          'BooleanSupplier supplier = true -> ();',
+          'BooleanSupplier supplier = () -> return true;',
+          'BooleanSupplier supplier = {return true;};'
+        ],
+        correctAnswer: 'BooleanSupplier supplier = () -> true;'
+      },
+      {
+        prompt: 'What is the correct syntax for using a lambda to define a multi line BooleanSupplier object that checks if a motor is busy',
+        choices: [
+          'BooleanSupplier supplier = () -> {\nreturn motor.isBusy();\n};',
+          'BooleanSupplier supplier = {\nreturn motor.isBusy();\n};',
+          'BooleanSupplier supplier -> {\nreturn motor.isBusy();\n};',
+          'BooleanSupplier supplier = (boolean bool) -> {\nreturn motor.isBusy();\n};'
+        ],
+        correctAnswer: 'BooleanSupplier supplier = () -> {\nreturn motor.isBusy();\n};'
+      },
     ],
+    codeExercises: [
+      {
+        prompt: 'Create a ConditionalBlockingAction that waits for a motor to reach full speed before continuing. Hint, motor.isBusy() will return whether or not the motor is getting up to speed. True = motor has not yet reached full speed, False = motor has reached full speed.',
+        answer: 'new ConditionalBlockingAction("Waiting for motor...", () -> !motor.isBusy());'
+      },
+      {
+        prompt: 'Create a TemporalBlockingAction that sets a boolean called bool to true, waits for 0.8 seconds, and then continues.',
+        answer: 'new TemporalBlockingAction("Action", 800, () -> bool = true);'
+      },
+      {
+        prompt: 'Create a PathBlockingAction that moves the robot from point (0,0) to point (5, 8).',
+        answer: dedent`
+        PathChain path = robot.pathBuilder()
+          .addPath(new BezierLine(new Pose(0,0),new Pose(5,8)))
+          .build();
+        
+        new PathBlockingAction("move", robot.getFollower(), path);`
+      },
+    ]
   },
 ];

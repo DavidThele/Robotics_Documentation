@@ -4,6 +4,8 @@ export const colors = {
   secondary: '#74ade9',   
   tertiary: '#1f7fe0',
   quaternary: '#a793d3',
+  success: '#66e485ff',
+  error: '#d53636ff',
   text: '#80848d',
   cardBg: '#1e2126',
   cardBorder: '#3a3d45',

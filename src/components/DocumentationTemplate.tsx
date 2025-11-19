@@ -58,6 +58,15 @@ export function DocumentationTemplate({ data }: { data: any }) {
                   {...props}
                 />
               ),
+              a: ({ ...props }) => (
+              <a
+                style={{
+                  color: colors.tertiary,   
+                  textDecoration: 'underline',
+                }}
+                {...props}
+              />
+            ),
             }}
           >
             {data.content}

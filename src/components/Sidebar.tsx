@@ -16,7 +16,7 @@ export function Sidebar({ isOpen, onToggleSidebar }: SidebarProps) {
   // Parse current mode and selected item from URL
   const pathParts = location.pathname.split('/').filter(Boolean);
   const currentMode = pathParts[0] === 'homework' ? 'homework' : 'documentation';
-  const selectedItemId = pathParts[1] || (currentMode === 'documentation' ? 'docs-home' : 'hw-home');
+  const selectedItemId = pathParts[1] || (currentMode === 'documentation' ? 'Documentation Overview' : 'HW Overview');
 
   const toggleFolder = (id: string) => {
     const newExpanded = new Set(expandedFolders);
@@ -98,7 +98,7 @@ export function Sidebar({ isOpen, onToggleSidebar }: SidebarProps) {
             </div>
             <div className="grid grid-cols-2 gap-2 p-1 rounded-lg" style={{ backgroundColor: '#24272d' }}>
               <button
-                onClick={() => handleSelectItem('documentation', 'docs-home')}
+                onClick={() => handleSelectItem('documentation', 'Documentation Overview')}
                 className="flex items-center justify-center gap-2 px-4 py-2 rounded-md transition-all"
                 style={{
                   backgroundColor: currentMode === 'documentation' ? '#74ade9' : 'transparent',
@@ -109,7 +109,7 @@ export function Sidebar({ isOpen, onToggleSidebar }: SidebarProps) {
                 <span>Docs</span>
               </button>
               <button
-                onClick={() => handleSelectItem('homework', 'hw-home')}
+                onClick={() => handleSelectItem('homework', 'HW Overview')}
                 className="flex items-center justify-center gap-2 px-4 py-2 rounded-md transition-all"
                 style={{
                   backgroundColor: currentMode === 'homework' ? '#74ade9' : 'transparent',

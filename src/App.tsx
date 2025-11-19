@@ -32,7 +32,7 @@ function SidebarWrapper({ sidebarOpen, setSidebarOpen }: any) {
       isOpen={sidebarOpen}
       currentMode={'documentation'} // you can compute based on URL
       onModeChange={(mode) => {
-        const homeId = mode === 'documentation' ? 'docs-home' : 'hw-home';
+        const homeId = mode === 'documentation' ? 'Documentation Overview' : 'HW Overview';
         handleSelectItem(mode, homeId);
       }}
       selectedItemId={''} // compute from URL if needed
@@ -50,7 +50,7 @@ function MainContentWrapper({ sidebarOpen }: any) {
       <main className="flex-1 overflow-y-auto">
         <div className="max-w-5xl mx-auto p-8">
           <Routes>
-            <Route path="/" element={<Navigate to="/documentation/docs-home" />} />
+            <Route path="/" element={<Navigate to="/documentation/Documentation Overview" />} />
             <Route path="/:mode/:id" element={<ContentRenderer />} />
           </Routes>
         </div>
