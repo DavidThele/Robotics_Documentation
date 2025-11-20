@@ -1132,6 +1132,7 @@ export const homeworkData = [
     difficulty: 'Easy',
     description: 'This assignment covers the basics of using what blocking actions are, how they work, and how they fit into the overall structure of the code.',
     objectives: ['Learn what blocking actions are', 'Learn about the methods within a blocking action', 'Learn about related classes that are closely used with blocking actions'],
+    lesson: `Blocking actions are basically tasks for the robot to do that temporarily take control over the robot to execute. They 'block', or stop other actions from running, until they terminate. They are used when you need to define things for the robot to are not instantaneous to complete, i.e. telling a motor to go to a certain RPM. The motor will take time to reach this rpm, and you don't want to run the next action until the motor get's up to speed, so you execute a Blocking Action to get the motor up to speed and only continue when the motor is at the desired RPM. Every blocking action contains two key methods: a loop() method, which runs repeatedly while the action is active, and an isFinished() method, which decides when the action is done; once isFinished() returns true, the program can move on to whatever comes next. Blocking actions often work together with two support classes: a BlockingActionManager, which queues and runs Blocking Actions in the correct order and without moving on until the current action is done; and a BlockingActionListener, which receives notifications when the action starts or ends. A BlockingActionManager can also be used instead of a BlockingActionListener, as it provides empty implementations of the two methods in BlockingActionListener so that you don't have to implement a method that you don't need. Together, these pieces let you organize robot behavior into clean, controlled steps without mixing all your logic into one giant loop.`,
     docReferences: ['BlockingAction'],
     mcq: [
       {
@@ -1183,6 +1184,7 @@ export const homeworkData = [
     difficulty: 'Easy',
     description: 'This assignment covers the different implementations of blocking actions and what they do. ',
     objectives: ['Learn about Conditional Blocking Actions', 'Learn about Temporal Blocking Actions', 'Learn about Path Blocking Actions'],
+    lesson: `Conditional, temporal, and path blocking actions are all specialized versions of normal blocking actions, each designed for a different type of waiting. A conditional blocking action runs until a boolean condition becomes true, using a BooleanSupplier instead of a regular boolean so the condition can be checked continuously while the robot is running; this lets the action finish the moment the condition flips rather than locking in a value from earlier. A temporal blocking action runs for a specific amount of time, which is useful when you need a predictable pause or want a motor or mechanism to run for a set duration before continuing. Finally, a path blocking action runs until the robot finishes following a defined movement path, making it useful for motion sequences where you don’t want later actions to start until the robot reaches its destination. All three of these still follow the normal blocking-action structure; They repeatedly run their loop() code and only move on when their isFinished() logic decides the action is complete, but each one bases that completion check on something different: a changing condition, a timer, or the robot’s progress along a path.`,
     docReferences: ['BlockingAction', 'ConditionalBlockingAction', 'TemporalBlockingAction', 'PathBlockingAction'],
     mcq: [
       {
@@ -1264,6 +1266,7 @@ export const homeworkData = [
     difficulty: 'Easy',
     description: 'This assignment covers defining paths for the robot to follow.',
     objectives: ['Learn what a Pathchain is', 'Learn about Bezier lines & curves', 'Learn how to define a path'],
+    lesson: `A path is a defined route for the robot to move along, and a PathChain is the object that stores a sequence of these routes so the robot can follow them in order. To build a path, you start by calling robot.pathBuilder(), which gives you a PathBuilder (a helper that collects the individual path segments you want the robot to take). Each segment is usually made from either a straight line (called a Bezier line) or a curve (called a Bezier curve); both are created by giving start and end points, with curves allowing extra control points for shaping turns. Once you have your builder, you add paths to it using builder.addPath(Path path), where, if you're making a simple straight line, a path might look like new BezierLine(new Pose(0,0), new Pose(10,10)). When you’ve added all the segments you want, you convert the builder into an actual PathChain by calling builder.build(). That PathChain can then be followed by the robot through a PathBlockingAction or whatever autonomous system you’re using, letting you define clean, ordered movement without manually coding wheel motions.`,
     docReferences: ['PathBlockingAction', 'Auton'],
     mcq: [
       {
@@ -1342,6 +1345,7 @@ export const homeworkData = [
     difficulty: 'Medium',
     description: 'This assignment covers actually writing Action Sequences for the auton period of the match.',
     objectives: ['Learn how to write an Action Sequence','Learn different types of actions'],
+    lesson: `An ActionSequence is an ordered list of everything you want the robot to do during the autonomous period. It is written inside the Auton class, which is the base class you override specifically for autonomous code. Inside this class, the key field you fill in is actionSequence, which is a variable that represents the set of movements and actions the robot will execute once the match starts. To define what the robot should actually do, you implement the createActionSequence() method; this is where you build paths, toggle mechanisms, and chain everything together. An action sequence can include different types of actions, such as path-following actions made from PathChain objects, or mechanism actions like enabling or disabling motors. These are added in the exact order you want them to run. By chaining these pieces together, you create a predictable, step-by-step autonomous routine that cleanly describes the robot’s entire plan for the period without scattering logic across multiple methods.`,
     docReferences: ['ActionSequence', 'Auton', 'BlockingAction'],
     mcq: [
       {
@@ -1355,7 +1359,7 @@ export const homeworkData = [
         correctAnswer: 'Auton'
       },
       {
-        prompt: 'What field defines the list of things your robot should do durign the autonomous period of the match',
+        prompt: 'What field defines the list of things your robot should do during the autonomous period of the match',
         choices: [
           'actionSequence',
           'blockingActionManager',
@@ -1421,8 +1425,9 @@ export const homeworkData = [
     name: 'Blocking Action Creation',
     type: 'file',
     difficulty: 'Medium',
-    description: 'This assignment covers creating new instances of the different types of blocking actions',
+    description: 'This assignment covers creating new instances of the different types of blocking actions.',
     objectives: ['Learn how to create a Temporal Blocking Action', 'Learn how to create a Path Blocking Action', 'Learn how to create a Conditional Blocking Action'],
+    lesson: `Blocking actions can also be created directly in your code whenever you need a specific type of step-by-step behavior. Each type of blocking action is built around the same idea: run something until a condition is met, then stop and move on. The different types of blocking actions, however, differ in what determines that stopping point. A ConditionalBlockingAction stops when a BooleanSupplier you provide flips to true, letting you wait for something in the robot to change state, such as a motor reaching full speed or a sensor detecting a target. A TemporalBlockingAction stops when a timer runs out, allowing you to run a short task for a fixed amount of time; when you create one, you give it a name, a duration in milliseconds, and a Runnable that defines what should happen while it’s active. A PathBlockingAction stops when the robot finishes following a path you built with a PathChain, letting you block until the robot physically reaches the end of that motion. All of these actions rely on lambdas (a compact way of writing methods inline) to define what they do (defined as a Runnable object) or what they check (defined as a BooleanSupplier object), which keeps the code short while still letting the robot run logic frame-by-frame. By choosing the right blocking action for the behavior you want, you can precisely control how long each step runs and make autonomous behavior predictable and organized.`,
     docReferences: ['BlockingAction', 'TemporalBlockingAction', 'PathBlockingAction', 'ConditionalBlockingAction'],
     mcq: [
       {

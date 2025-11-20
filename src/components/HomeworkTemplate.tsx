@@ -189,7 +189,7 @@ export function HomeworkTemplate({ data }: { data: any }) {
         <div>
           <h2 style={{ ...typography.h2, color: colors.secondary }}>Description</h2>
           <p style={{ ...typography.p, color: colors.text, marginTop: '0.5rem' }}>
-            {data.description + ' Please ensure you have read the entirety of the Documentation Overview, as well as the Related Documentation below before continuing.'}
+            {data.description + ' Please ensure you have read the entirety of the Documentation Overview, the Lesson below, and the Related Documentation below before continuing.'}
           </p>
         </div>
       )}
@@ -205,6 +205,13 @@ export function HomeworkTemplate({ data }: { data: any }) {
               </li>
             ))}
           </ul>
+        </div>
+      )}
+      {data.lesson?.length > 0 && (
+        <div>
+          <h2 style={{ ...typography.h2, color: colors.secondary, marginBottom: '0.5rem'}}>Lesson</h2>
+          <p style={{ ...typography.p, color: colors.text}}>{data.lesson}</p>
+          
         </div>
       )}
 

@@ -1,7 +1,7 @@
 // styles.ts
 export const colors = {
   primary: '#d17277',     
-  secondary: '#74ade9',   
+  secondary: '#74ade9ff',   
   tertiary: '#1f7fe0',
   quaternary: '#a793d3',
   success: '#66e485ff',
